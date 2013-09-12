@@ -15,10 +15,13 @@ limitations under the License.
 */
 package app.config;
 
+import java.io.*;
 import java.sql.*;
+import java.util.*;
 
-import org.javalite.activeweb.AbstractDBConfig;
-import org.javalite.activeweb.AppContext;
+import org.javalite.activeweb.*;
+
+import com.google.common.base.Splitter;
 
 /**
  * @author Igor Polevoy
@@ -30,7 +33,7 @@ public class DbConfig extends AbstractDBConfig {
   String pwd = "";
 
   public void init(AppContext context) {
-    createTable();
+    init_database(getStatements(";", "create_database.sql", "sample_data.sql"));
 
     environment("development").jdbc(driver, url, uname, pwd);
 
@@ -39,24 +42,41 @@ public class DbConfig extends AbstractDBConfig {
     environment("production").jndi("jdbc/simple_production");
   }
 
-  private void createTable() {
-      try{
-        String sql = "CREATE TABLE books ( "+
-            "id  int(11) DEFAULT NULL auto_increment PRIMARY KEY, "+
-            "author VARCHAR(128), "+
-            "title VARCHAR(128), "+
-            "isbn VARCHAR(128), "+
-            "created_at DATETIME, "+
-            "updated_at DATETIME "+
-          ") ";
-        Class.forName(driver);
-        Connection con = DriverManager.getConnection(url, uname, pwd);
-        Statement st = con.createStatement();
-        st.executeUpdate(sql);
-        st.close();
-        con.close();
-      }catch(Exception e){
-        e.printStackTrace(System.err);
+  private void init_database(List<String> sqls) {
+    try {
+      Class.forName(driver);
+      Connection con = DriverManager.getConnection(url, uname, pwd);
+      Statement st = con.createStatement();
+      for (String sql : sqls) {
+        System.out.println(sql);
+        st.execute(sql);
+      }
+      st.close();
+      con.close();
+    } catch (Exception e) {
+      e.printStackTrace(System.err);
+    }
+  }
+
+  public List<String> getStatements(String delimiter, String... files) {
+    List<String> sqls = new ArrayList<String>();
+    for (String file : files) {
+      try {
+        System.out.println("Getting statements from file: " + file);
+        InputStreamReader isr = new InputStreamReader(DbConfig.class.getClassLoader().getResourceAsStream(file));
+        BufferedReader reader = new BufferedReader(isr);
+        StringBuffer text = new StringBuffer();
+        String t;
+        while ((t = reader.readLine()) != null) {
+          text.append(t + '\n');
+        }
+        sqls.addAll(Splitter.on(delimiter).omitEmptyStrings().splitToList(text));
+      } catch (Exception e) {
+        e.printStackTrace();
+        throw new RuntimeException(e);
       }
     }
+    System.out.println("Nr of statements: "+sqls.size());
+    return sqls;
+  }
 }
