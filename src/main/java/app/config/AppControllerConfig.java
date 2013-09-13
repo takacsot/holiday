@@ -16,11 +16,8 @@ limitations under the License.
 package app.config;
 
 
-import org.javalite.activeweb.AbstractControllerConfig;
-import org.javalite.activeweb.AppContext;
-import org.javalite.activeweb.controller_filters.DBConnectionFilter;
-import org.javalite.activeweb.controller_filters.TimingFilter;
-import app.controllers.BooksController;
+import org.javalite.activeweb.*;
+import org.javalite.activeweb.controller_filters.*;
 
 
 /**
@@ -30,6 +27,7 @@ public class AppControllerConfig extends AbstractControllerConfig {
 
     public void init(AppContext context) {
         addGlobalFilters(new TimingFilter());
-        add(new DBConnectionFilter()).to(BooksController.class);
+        addGlobalFilters(new DBConnectionFilter());
+//        add(new DBConnectionFilter()).to(BooksController.class);
     }
 }
