@@ -17,15 +17,13 @@ public class HolidaysController extends AppController {
 
   @POST
   public void create() {
-    Holiday holiday = new Holiday();
-    holiday.fromMap(params1st());
+    Holiday holiday = Holiday.draft(params1st());
     if (!holiday.save()) {
       flash("message", "Something went wrong, please  fill out all fields");
       flash("errors", holiday.errors());
       flash("params", params1st());
       redirect(HolidaysController.class, "new_form");
-    }
-    else {
+    } else {
       flash("message", "New holiday was added: ");
       redirect(HolidaysController.class);
     }
@@ -38,14 +36,23 @@ public class HolidaysController extends AppController {
     flash("message", "Holiday: '' was deleted");
     redirect(HolidaysController.class);
   }
-  
-  public void show(){
+
+  public void show() {
     Holiday b = Holiday.findById(getId());
-    if(b != null){
-        view("holiday", b);
-    }else{
-        view("message", "are you trying to hack the URL?");
-        render("/system/404");
+    if (b != null) {
+      view("holiday", b);
+    } else {
+      view("message", "are you trying to hack the URL?");
+      render("/system/404");
     }
-}
+  }
+  
+  @GET
+  public void toRequested(){
+    Holiday h = Holiday.findById(getId());
+    h.toRequested();
+    h.saveIt();
+    flash("message","request is sent to supervisor");
+    redirect(HolidaysController.class);
+  }
 }

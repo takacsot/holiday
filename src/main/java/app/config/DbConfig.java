@@ -36,8 +36,9 @@ public class DbConfig extends AbstractDBConfig {
     init_database(getStatements(";", "create_database.sql", "sample_data.sql"));
 
     environment("development").jdbc(driver, url, uname, pwd);
+    environment("development").testing().jdbc(driver, url, uname, pwd);
 
-    environment("development").testing().jdbc("com.mysql.jdbc.Driver", "jdbc:mysql://localhost/simple_test", "root", "p@ssw0rd");
+//    environment("development").testing().jdbc("com.mysql.jdbc.Driver", "jdbc:mysql://localhost/simple_test", "root", "p@ssw0rd");
 
     environment("production").jndi("jdbc/simple_production");
   }
@@ -48,7 +49,7 @@ public class DbConfig extends AbstractDBConfig {
       Connection con = DriverManager.getConnection(url, uname, pwd);
       Statement st = con.createStatement();
       for (String sql : sqls) {
-        System.out.println(sql);
+        //System.out.println(sql);
         st.execute(sql);
       }
       st.close();
@@ -62,7 +63,7 @@ public class DbConfig extends AbstractDBConfig {
     List<String> sqls = new ArrayList<String>();
     for (String file : files) {
       try {
-        System.out.println("Getting statements from file: " + file);
+        //System.out.println("Getting statements from file: " + file);
         InputStreamReader isr = new InputStreamReader(DbConfig.class.getClassLoader().getResourceAsStream(file));
         BufferedReader reader = new BufferedReader(isr);
         StringBuffer text = new StringBuffer();
@@ -76,7 +77,7 @@ public class DbConfig extends AbstractDBConfig {
         throw new RuntimeException(e);
       }
     }
-    System.out.println("Nr of statements: "+sqls.size());
+    //System.out.println("Nr of statements: "+sqls.size());
     return sqls;
   }
 }

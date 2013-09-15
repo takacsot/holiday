@@ -19,12 +19,6 @@
             </td>
         </tr>
         <tr>
-            <td>status:</td>
-            <td><input type="text" name="status" value="${(flasher.params.status)!}"> *
-                <span class="error">${(flasher.errors.status)!}</span>
-            </td>
-        </tr>
-        <tr>
             <td>category:</td>
             <td><input type="text" name="category" value="${(flasher.params.category)!}"> *
                 <span class="error">${(flasher.errors.category)!}</span>
