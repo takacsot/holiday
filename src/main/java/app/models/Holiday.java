@@ -48,4 +48,9 @@ public class Holiday extends Model {
     checkState(asList("requested", "draft").contains(getStep()), "Must be in state non final state");
     setStep("canceled");
   }
+
+  public void confirm() {
+    checkState("requested".equals(getStep()));
+    setStep("confirmed");
+  }
 }

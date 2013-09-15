@@ -1,5 +1,7 @@
 package app.models;
 
+import static org.junit.Assert.*;
+
 import java.util.Date;
 
 import org.javalite.activeweb.DBSpec;
@@ -65,5 +67,18 @@ public class HolidaySpec extends DBSpec {
     h.toRequested();
     h.cancel();
     a(h.getStep()).shouldBeEqual("canceled");
+  }
+  
+  Holiday h = new Holiday();
+  @Test
+  public void confirm() throws Exception {
+    h.setStep("requested");
+    h.confirm();
+    a(h.getStep()).shouldBeEqual("confirmed");
+  }
+  
+  @Test
+  public void non_confirmable() throws Exception {
+    
   }
 }
