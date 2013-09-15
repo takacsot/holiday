@@ -12,22 +12,25 @@ distributed under the License is distributed on an "AS IS" BASIS,
 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. 
 See the License for the specific language governing permissions and 
 limitations under the License. 
-*/
+ */
 package app.config;
-
 
 import org.javalite.activeweb.*;
 import org.javalite.activeweb.controller_filters.*;
 
+import app.controllers.AuthsController;
 
 /**
  * @author Igor Polevoy
  */
 public class AppControllerConfig extends AbstractControllerConfig {
 
-    public void init(AppContext context) {
-        addGlobalFilters(new TimingFilter());
-        addGlobalFilters(new DBConnectionFilter());
-//        add(new DBConnectionFilter()).to(BooksController.class);
-    }
+  @SuppressWarnings("unchecked")
+  @Override
+  public void init(AppContext context) {
+    addGlobalFilters(new TimingFilter());
+    addGlobalFilters(new DBConnectionFilter());
+    addGlobalFilters(new AuthFilter()).exceptFor(AuthsController.class);
+    // add(new DBConnectionFilter()).to(BooksController.class);
+  }
 }

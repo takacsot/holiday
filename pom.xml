@@ -16,7 +16,7 @@
 
 		<jdbc.test.url>jdbc:mysql://localhost/simple_test</jdbc.test.url>
 
-		<activeweb.version>1.4</activeweb.version>
+		<activeweb.version>1.9</activeweb.version>
 	</properties>
 
 	<build>
