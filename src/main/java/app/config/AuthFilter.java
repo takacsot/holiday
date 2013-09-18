@@ -5,13 +5,13 @@ import org.javalite.activeweb.controller_filters.*;
 import app.controllers.AuthsController;
 import app.models.*;
 
-public class AuthFilter extends  HttpSupportFilter{
+public class AuthFilter extends HttpSupportFilter {
 
   @Override
   public void before() {
-    AppUser loggedIn = (AppUser)session("user");
-    if(null == loggedIn || !loggedIn.authorized()){
-      redirect(AuthsController.class);
+    AppUser loggedIn = (AppUser) session(AppUser.SESSION_VAR);
+    if (null == loggedIn || !loggedIn.authorized()) {
+      redirect(AuthsController.class, "login");
     }
 
   }
