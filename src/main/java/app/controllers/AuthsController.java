@@ -6,7 +6,6 @@ import org.javalite.activeweb.annotations.*;
 import app.models.*;
 
 public class AuthsController extends AppController {
-
   public void index() {
   }
 

@@ -31,6 +31,6 @@ public class AppControllerConfig extends AbstractControllerConfig {
     addGlobalFilters(new TimingFilter());
     addGlobalFilters(new DBConnectionFilter());
     addGlobalFilters(new AuthFilter()).exceptFor(AuthsController.class);
-    // add(new DBConnectionFilter()).to(BooksController.class);
+    addGlobalFilters(new CurrentUserFilter());
   }
 }

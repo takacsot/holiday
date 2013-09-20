@@ -29,10 +29,19 @@ public class User extends Model implements AppUser {
   public boolean authorized() {
     return true;
   }
+  
+  @Override
+  public Integer getId(){
+    return (Integer)super.getId();
+  }
 
   public static class NonAuthenticatedUser implements AppUser {
     public boolean authorized() {
       return false;
+    }
+
+    public Integer getId() {
+      return -1;
     }
 
   }

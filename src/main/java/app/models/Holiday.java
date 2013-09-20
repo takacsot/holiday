@@ -5,7 +5,7 @@ import static java.util.Arrays.asList;
 
 import java.util.*;
 
-import org.javalite.activejdbc.Model;
+import org.javalite.activejdbc.*;
 
 import com.google.common.base.Preconditions;
 
@@ -52,5 +52,13 @@ public class Holiday extends Model {
   public void confirm() {
     checkState("requested".equals(getStep()));
     setStep("confirmed");
+  }
+  
+  public User getUser(){
+    return super.parent(User.class);
+  }
+
+  public static LazyList<Holiday> findAllForUser(User user) {
+    return where("user_id = ?", user.getId());
   }
 }

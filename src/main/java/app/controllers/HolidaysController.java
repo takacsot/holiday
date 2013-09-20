@@ -9,7 +9,11 @@ public class HolidaysController extends AppController {
 
   public void index() {
     System.out.println(Holiday.getTableName());
-    view("holidays", Holiday.findAll());
+    view("holidays", Holiday.findAllForUser(user()));
+  }
+
+  private User user() {
+    return (User)session(AppUser.SESSION_VAR);
   }
 
   public void newForm() {

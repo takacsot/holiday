@@ -17,7 +17,7 @@
     </tr>
 <#list holidays as hd>
     <tr>
-        <td>${hd.user_id!-1}</td>
+        <td>${hd.user.username!'NA'}</td>
         <td>${hd.from_date}</td>
         <td>${hd.to_date}</td>
         <td>${hd.step}</td>
