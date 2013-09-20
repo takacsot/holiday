@@ -19,6 +19,9 @@ public class Holiday extends Model {
   // category varchar(16),
   // comment varchar(2147483647)
   // );
+  static{
+    validateWith(new HolidayCategoryValidator());
+  }
   public Object getStep() {
     return get("step");
   }
@@ -60,5 +63,12 @@ public class Holiday extends Model {
 
   public static LazyList<Holiday> findAllForUser(User user) {
     return where("user_id = ?", user.getId());
+  }
+  
+  public HolidayCategory getCategory(){
+    if (null == get("category")){
+      return HolidayCategory.HOLIDAY;
+    }
+    return HolidayCategory.valueOf(getString("category"));
   }
 }

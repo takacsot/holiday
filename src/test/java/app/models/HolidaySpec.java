@@ -81,4 +81,12 @@ public class HolidaySpec extends DBSpec {
   public void non_confirmable() throws Exception {
     
   }
+  
+  @Test
+  public void getCategory() throws Exception {
+    h= new Holiday();
+    assertEquals(HolidayCategory.HOLIDAY, h.getCategory());
+    h.set("category", "OTHER");
+    assertEquals(HolidayCategory.OTHER, h.getCategory());
+  }
 }
