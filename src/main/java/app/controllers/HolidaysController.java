@@ -8,7 +8,6 @@ import app.models.*;
 public class HolidaysController extends AppController {
 
   public void index() {
-    System.out.println(Holiday.getTableName());
     view("holidays", Holiday.findAllForUser(user()));
   }
 
@@ -58,5 +57,11 @@ public class HolidaysController extends AppController {
     h.saveIt();
     flash("message","request is sent to supervisor");
     redirect(HolidaysController.class);
+  }
+  
+  @GET
+  public void allHolidays(){
+    view("holidays", Holiday.findAll());
+    render("index");
   }
 }

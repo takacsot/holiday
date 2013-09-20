@@ -5,7 +5,9 @@
 
 
 
-<@link_to action="new_form">Add new holiday</@link_to>
+| <@link_to action="new_form">Add new holiday</@link_to>
+| <@link_to action="index">My holidays</@link_to>
+| <@link_to action="all_holidays">All Holidays</@link_to>
 
 <table>
     <tr>
@@ -28,7 +30,7 @@
             <@form  id=hd.id action="delete" method="delete" html_id=hd.id />
             |<@link_to action="toRequested" id=hd.id method="get">To Requested</@link_to>
         </td>
-        <td>${hd}</td>
+        <td>{hd}</td>
     </tr>
 </#list>
 </table>
